@@ -15,7 +15,7 @@ Console.WriteLine($"La varianza è: {s.Std()}");
 
 Console.WriteLine($"Elementi: {s.Count()}, {s.size}");
 Console.WriteLine($"Elementi indice: {s.Index.size}");
-Console.WriteLine($"E' vuota? {s.IsEmpty()}");
+Console.WriteLine($"E' vuota? {s.empty}");
 Console.WriteLine();
 
 s.Add("f", 6);
@@ -51,4 +51,6 @@ s2["a"] = null; // Assigning null to a nullable string
 Console.WriteLine(s2.ToString());
 Console.WriteLine($"Ci sono nulli?: {s2.HasNaN()}");
 s2.FillNaN("x");
+Console.WriteLine(s2.ToString());
+s2.Name = "stringhe";
 Console.WriteLine(s2.ToString());

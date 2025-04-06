@@ -7,12 +7,12 @@ namespace Pandas.Interfaces;
 /// </summary>
 public interface IPandas<T> : IEnumerable<T> {
 
-    // metodo per verificare è vuoto
+    /* // metodo per verificare è vuoto
     /// <summary>
     /// Check if the series is empty.
     /// </summary>
     /// <returns></returns>
-    bool IsEmpty();
+    bool IsEmpty(); */
 
     // metodo per convertire in stringa 
     /// <summary>

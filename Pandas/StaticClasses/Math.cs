@@ -134,7 +134,7 @@ public static class Math {
         if (IsNaN(value)) {
             throw new ArgumentException("Value must not be NaN.");
         }
-        if (series.IsEmpty()) {
+        if (series.empty) {
             throw new KeyNotFoundException("The series is empty.");
         }
         // per ogni valore nella serie, se è NaN, lo sostituiamo con il valore specificato
@@ -168,7 +168,7 @@ public static class Math {
     /// <param name="Series">List of objects.</param>
     /// <returns></returns>
     public static Series<T> RemoveNaN<T>(this Series<T> series) {
-        if (series.IsEmpty()) {
+        if (series.empty) {
             throw new KeyNotFoundException("The series is empty.");
         }
         // per ogni valore nella serie, se è NaN, lo rimuoviamo
