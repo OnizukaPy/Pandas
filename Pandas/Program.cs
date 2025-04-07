@@ -49,7 +49,7 @@ var s2 = new Pd.Series<string?>(new List<string?> { "a", "b", "c", "d", "e" }, n
 Console.WriteLine(s2.ToString());
 s2["a"] = null; // Assigning null to a nullable string
 Console.WriteLine(s2.ToString());
-Console.WriteLine($"Ci sono nulli?: {s2.HasNaN()}");
+Console.WriteLine($"Ci sono nulli?: {s2.HasNaNs()}");
 s2.FillNaN("x");
 Console.WriteLine(s2.ToString());
 s2.Name = "stringhe";

@@ -93,6 +93,24 @@ public class Series<T> : IPandas<T> {
     public string? Flags {
         get { return _flags?.ToString(); }
     }
+
+    // proprietà per verificare se la serie ha dei valori NaN
+    /// <summary>
+    /// Check if the series has NaN values.
+    /// </summary>
+    /// <returns></returns>
+    public bool HasNaNs {
+        get { return this.HasNaNs(); }
+    }
+
+    // proprietà per verificare se la serie ha dei valori unici
+    /// <summary>
+    /// Return boolean if values in the object are unique.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsUnique {
+        get { return this.IsUnique(); }
+    }
     #endregion
 
     #region "Indexer"
@@ -167,9 +185,6 @@ public class Series<T> : IPandas<T> {
         if (data == null) {
             throw new ArgumentNullException("Data cannot be null.");
         }
-        if (data.Count == 0) {
-            throw new KeyNotFoundException("Data cannot be empty.");
-        }
         if (data.Count > _limit) {
             throw new InvalidOperationException("Length of data exceeds maximum limit.");
         }
@@ -184,13 +199,11 @@ public class Series<T> : IPandas<T> {
     /// <param name="indices"></param>
     /// <param name="name"></param>
     /// <remarks>Default is Values</remarks>
-    /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="KeyNotFoundException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <exception cref="OverflowException"></exception>
-    /// <exception cref="NotSupportedException"></exception>
+    /// <exception cref="ArgumentException"></exception>
     public Series(List<T> values, List<string> indices, string? name = null) {
         Init();
         if (values.Count != indices.Count) {
@@ -246,7 +259,7 @@ public class Series<T> : IPandas<T> {
     /// </summary>
     /// <returns></returns>
     /// <exception cref="KeyNotFoundException"></exception>
-    int Count() {
+    private int Count() {
         if (IsEmpty()) {
             throw new KeyNotFoundException("The series is empty.");
         }
@@ -258,7 +271,7 @@ public class Series<T> : IPandas<T> {
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    bool IsEmpty() {
+    private bool IsEmpty() {
         if (_data == null) {
             throw new ArgumentNullException("The series is null.");
         }
