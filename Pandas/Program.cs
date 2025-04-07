@@ -54,3 +54,9 @@ s2.FillNaN("x");
 Console.WriteLine(s2.ToString());
 s2.Name = "stringhe";
 Console.WriteLine(s2.ToString());
+
+// copiamo la serie
+var s3 = s2.Copy(false);
+Console.WriteLine(s3.ToString());
+Console.WriteLine($"Sono uguali?: {s2.Equals(s3, false)}");
+

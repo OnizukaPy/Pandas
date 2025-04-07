@@ -1,4 +1,5 @@
 global using Pd = Pandas.Models;
+global using Pandas.Models;
 global using Pandas.Models.Base;
 global using Pandas.Interfaces;
 global using Pandas.StaticClasses;

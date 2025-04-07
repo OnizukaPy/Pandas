@@ -1,6 +1,4 @@
 // classe statica per le operazioni matermatiche tra serie
-using Pandas.Models;
-
 namespace Pandas.StaticClasses;
 
 public static class Math {
@@ -14,7 +12,7 @@ public static class Math {
     /// <returns></returns>
     public static double Sum<T>(this Series<T> series) {
 
-        CheckEmpty(series);
+        SeriesOperation.CheckEmpty(series);
         series = RemoveNaNs(series);
 
         if (series.Values.All(item => IsNumber(item))) {
@@ -37,7 +35,7 @@ public static class Math {
     /// <returns></returns>
     public static double Mean<T>(this Series<T> series) {
 
-        CheckEmpty(series);
+        SeriesOperation.CheckEmpty(series);
         series = RemoveNaNs(series);
 
         if (series.Values.All(item => IsNumber(item))) {
@@ -60,7 +58,7 @@ public static class Math {
     /// <returns></returns>
     public static double Max<T>(this Series<T> series) {
 
-        CheckEmpty(series);
+        SeriesOperation.CheckEmpty(series);
         series = RemoveNaNs(series);
 
         if (series.Values.All(item => IsNumber(item))) {
@@ -80,7 +78,7 @@ public static class Math {
     /// <returns></returns>
     public static double Min<T>(this Series<T> series) {
 
-        CheckEmpty(series);
+        SeriesOperation.CheckEmpty(series);
         series = RemoveNaNs(series);
 
         if (series.Values.All(item => IsNumber(item))) {
@@ -100,7 +98,7 @@ public static class Math {
     /// <returns></returns>
     public static double Std<T>(this Series<T> series) {
 
-        CheckEmpty(series);
+        SeriesOperation.CheckEmpty(series);
         series = RemoveNaNs(series);
 
         if (series.Values.All(item => IsNumber(item)) && series.size > 1) {
@@ -138,113 +136,5 @@ public static class Math {
     /// <returns></returns>
     static bool IsNumber<T>(T value) {
         return value is int || value is double || value is float || value is decimal;
-    }
-
-    // metodo per riempire i punti NaN con un valore specificato
-    /// <summary>
-    /// Fill NaN values with a specified value.
-    /// / </summary>
-    /// <param name="value"></param>
-    public static void FillNaN<T>(this Series<T> series, T value) {
-
-        CheckEmpty(series);
-        CheckValueIsNaN(value);
-
-        // per ogni valore nella serie, se è NaN, lo sostituiamo con il valore specificato
-        if (series.HasNaNs()) {
-            series.Index.ForEach(index => {
-                if (IsNaN(series[index])) {
-                    series[index] = value;
-                }
-            });
-        }
-    }
-
-    // metodo per valutare se una seria ha dei valori NaN
-    /// <summary>
-    /// Check if a series has NaN values.
-    /// </summary>
-    /// <param name="series">Series to check.</param>
-    /// <returns></returns>
-    public static bool HasNaNs<T>(this Series<T> series) {
-
-        CheckEmpty(series);
-
-        // per ogni valore nella serie, se è NaN, lo rimuoviamo
-        bool hasNaN = false;
-        hasNaN = series.Values.Any(item => IsNaN(item) ||     
-                                         item is null || 
-                                         item.Equals(String.Empty)
-                                        ); 
-        return hasNaN;
-    }
-
-    // metodo per rimuovere i NaN da una serie
-    /// <summary>
-    /// Remove NaN values from a list of objects.
-    /// </summary>
-    /// <param name="Series">List of objects.</param>
-    /// <returns></returns>
-    private static Series<T> RemoveNaN<T>(this Series<T> series) {
-
-        CheckEmpty(series);
-
-        // per ogni valore nella serie, se è NaN, lo rimuoviamo
-        var newSeries = new Series<T>(
-            series.Values.Where(item => !IsNaN(item)).ToList(), 
-            series.Index.Where(index => !IsNaN(series[index])).ToList()
-            ) {
-                Name = series.Name,
-        };
-        return newSeries;
-    }
-
-    // metodo per verificare se un valore è NaN e sollevata un'eccezione
-    /// <summary>
-    /// Check if a value is NaN and throw an exception if it is.
-    /// </summary>
-    /// <param name="value">Value to check.</param>
-    /// <exception cref="ArgumentException">Value must not be NaN.</exception>
-    private static void CheckValueIsNaN<T>(T value) {
-        if (IsNaN(value)) {
-            throw new ArgumentException("Value must not be NaN.");
-        }
-    }
-
-    // metodo per valutare se un oggeetto T è NaN
-    /// <summary>
-    /// Check if a value is NaN.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    private static bool IsNaN<T>(T value) {
-        if (value is Num.NaN || value is null || value is "") {
-            return true;
-        }
-        return false;
-    }
-
-    // metodo per verificare se i valori di una serie sono uniti
-    /// <summary>
-    /// Return boolean if values in the object are unique.
-    /// </summary>
-    /// <param name="series">Series to check.</param>
-    /// <returns></returns>
-    public static bool IsUnique<T>(this Series<T> series) {
-        CheckEmpty(series);
-        // per ogni valore nella serie, se è NaN, lo rimuoviamo
-        return series.Values.Distinct().Count() == series.Values.Count();
-    }
-
-    // metodo per verificare se la serie è vuota
-    /// <summary>
-    /// Check if a series is empty.
-    /// </summary>
-    /// <param name="series">Series to check.</param>
-    /// <exception cref="KeyNotFoundException">Series is empty.</exception>
-    private static void CheckEmpty<T>(Series<T> series) {
-        if (series.empty) {
-            throw new KeyNotFoundException("The series is empty.");
-        }
     }
 }

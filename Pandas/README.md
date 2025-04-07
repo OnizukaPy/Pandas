@@ -47,28 +47,44 @@ pandas.Series
 
  - Attributes
 
-    * [x] T:                        Return the transpose, which is by definition self.
-    * **[x] at:                       Access a single value for a row/column label pair.**  (Implementata come indexer)
-    * [x] dtype:                    Return the dtype object of the underlying data.
-    * [x] empty:                    Indicator whether Series/DataFrame is empty.
-    * [x] hasnans:                  Return True if there are any NaNs.
-    * [x] index:                    The index (axis labels) of the Series.
-    * [x] is_unique:                Return boolean if values in the object are unique.
-    * [x] name:                     Return the name of the Series.
-    * [x] size:                     Return the number of elements in the underlying data.
-    * [x] values:                   Return Series as ndarray or ndarray-like depending on the dtype.
+   * [x] T:                        Return the transpose, which is by definition self.
+   * **[x] at:                       Access a single value for a row/column label pair.**  (Implementata come indexer)
+   * [x] dtype:                    Return the dtype object of the underlying data.
+   * [x] empty:                    Indicator whether Series/DataFrame is empty.
+   * [x] hasnans:                  Return True if there are any NaNs.
+   * [x] index:                    The index (axis labels) of the Series.
+   * [x] is_unique:                Return boolean if values in the object are unique.
+   * [x] name:                     Return the name of the Series.
+   * [x] size:                     Return the number of elements in the underlying data.
+   * [x] values:                   Return Series as ndarray or ndarray-like depending on the dtype.
 
-    * [ ] **(Da implementare)** flags:                    Get the properties associated with this pandas object.  
-    * [ ] **(Da implementare)**is_monotonic_decreasing:  Return boolean if values in the object are monotonically decreasing.
-    * [ ] **(Da implementare)**is_monotonic_increasing:  Return boolean if values in the object are monotonically increasing.
+   * [ ] **(Da implementare)** flags:                    Get the properties associated with this pandas object.  
+   * [ ] **(Da implementare)**is_monotonic_decreasing:  Return boolean if values in the object are monotonically decreasing.
+   * [ ] **(Da implementare)**is_monotonic_increasing:  Return boolean if values in the object are monotonically increasing.
 
-    * *[ ] array:                    The ExtensionArray of the data backing this Series or Index.*  (Da studiare)
-    * *[ ] attrs:                    Dictionary of global attributes of this dataset.*  (Non implementata)
-    * *[ ] nbytes:                   Return the number of bytes in the underlying data.*  (Non implementata)
-    * *[ ] ndim:                     Number of dimensions of the underlying data, by definition 1.*  (Non implementata)
-    * *[ ] shape:                    Return a tuple of the shape of the underlying data.*  (Non implementata)
+   * *[ ] array:                    The ExtensionArray of the data backing this Series or Index.*  (Da studiare)
+   * *[ ] attrs:                    Dictionary of global attributes of this dataset.*  (Non implementata)
+   * *[ ] nbytes:                   Return the number of bytes in the underlying data.*  (Non implementata)
+   * *[ ] ndim:                     Number of dimensions of the underlying data, by definition 1.*  (Non implementata)
+   * *[ ] shape:                    Return a tuple of the shape of the underlying data.*  (Non implementata)
 
-    * [ ] iat:                      Access a single value for a row/column pair by integer position.
-    * [ ] loc:                      Access a group of rows and columns by label(s) or a boolean array.
-    * [ ] iloc:                     **(DEPRECATED) Purely integer-location based indexing for selection by position.**
-    
+   * [ ] iat:                      Access a single value for a row/column pair by integer position.
+   * [ ] loc:                      Access a group of rows and columns by label(s) or a boolean array.
+   * [ ] iloc:                     **(DEPRECATED) Purely integer-location based indexing for selection by position.**
+
+ - Conversion
+
+   * [ ] **(Da implementare)** astype:                   Cast a pandas object to a specified dtype.
+   * [ ] **(Da implementare)** convert_dtypes:           Convert columns of a DataFrame to the best possible dtypes that support the data.
+   * [ ] **(Da implementare)** convert_objects:          Convert argument to a Series of objects.  (Deprecated)
+   * [x] copy:                     Make a copy of this object’s indices and data.
+   * [x] to_dict:                 Convert the Series to a dictionary.
+   * [ ] **(Da implementare)** to_frame:                Cast Series to DataFrame.
+   * [ ] **(Da implementare)** to_numpy:                Return the values as a NumPy array.
+   * [x] tolist:                  Return the Series as a (possibly not deep) copy of ndarray.  (Deprecated)
+   
+# Nuove Implementazioni
+
+## MultiIndex
+
+[Guida ufficiale](https://pandas.pydata.org/docs/reference/api/pandas.MultiIndex.html)

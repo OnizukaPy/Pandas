@@ -472,5 +472,10 @@ public class Series<T> : IPandas<T> {
             throw new OverflowException($"Length of {text} exceeds maximum limit.");
         }
     }
+
+    public static explicit operator Series<T>(Series<string?> v)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 }
