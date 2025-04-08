@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Collections.Frozen;
+
 Console.WriteLine("proviamo a fare un po' di pandas in c#");
 
 var s = new Pd.Series<object>(new List<object> {1, Num.NaN, 3, 4, 5}, new List<string> { "a", "b", "c", "d", "e" });
@@ -59,4 +61,11 @@ Console.WriteLine(s2.ToString());
 var s3 = s2.Copy(false);
 Console.WriteLine(s3.ToString());
 Console.WriteLine($"Sono uguali?: {s2.Equals(s3, false)}");
+
+// sommiamo le due serie
+//! Da debuggare perché non funziona
+Console.WriteLine($"Indice di s2: {s2.Index}");
+Console.WriteLine($"Indice di s3: {s3.Index}");
+s2.Add(s3);
+Console.WriteLine($"Indice di s2: {s2.ToString()}");
 

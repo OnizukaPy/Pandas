@@ -12,10 +12,10 @@ public static class Math {
     /// <returns></returns>
     public static double Sum<T>(this Series<T> series) {
 
-        SeriesOperation.CheckEmpty(series);
+        Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => IsNumber(item))) {
+        if (series.Values.All(item => Controller.IsNumber(item))) {
             double sum = 0;
             foreach (var item in series.Values) {
                 sum += Convert.ToDouble(item);
@@ -35,10 +35,10 @@ public static class Math {
     /// <returns></returns>
     public static double Mean<T>(this Series<T> series) {
 
-        SeriesOperation.CheckEmpty(series);
+        Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => IsNumber(item))) {
+        if (series.Values.All(item => Controller.IsNumber(item))) {
             if (series.size > 0)
                 return series.Sum() / series.size;
             else
@@ -58,10 +58,10 @@ public static class Math {
     /// <returns></returns>
     public static double Max<T>(this Series<T> series) {
 
-        SeriesOperation.CheckEmpty(series);
+        Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => IsNumber(item))) {
+        if (series.Values.All(item => Controller.IsNumber(item))) {
             double max = series.Values.Max(item => Convert.ToDouble(item));
             return max;
         } else {
@@ -78,10 +78,10 @@ public static class Math {
     /// <returns></returns>
     public static double Min<T>(this Series<T> series) {
 
-        SeriesOperation.CheckEmpty(series);
+        Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => IsNumber(item))) {
+        if (series.Values.All(item => Controller.IsNumber(item))) {
             double min = series.Values.Min(item => Convert.ToDouble(item));
             return min;
         } else {
@@ -98,10 +98,10 @@ public static class Math {
     /// <returns></returns>
     public static double Std<T>(this Series<T> series) {
 
-        SeriesOperation.CheckEmpty(series);
+        Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => IsNumber(item)) && series.size > 1) {
+        if (series.Values.All(item => Controller.IsNumber(item)) && series.size > 1) {
             double mean = series.Mean();
             double variance = series.Values.Sum(item =>
                         System.Math.Pow(Convert.ToDouble(item) - mean, 2)) / (series.size - 1
@@ -125,16 +125,5 @@ public static class Math {
             series = series.RemoveNaN();
         }
         return series;
-    }
-
-    // metodo per verificare se T è un numero
-    /// <summary>
-    /// Check if T is a number.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="value">Value to check.</param>
-    /// <returns></returns>
-    static bool IsNumber<T>(T value) {
-        return value is int || value is double || value is float || value is decimal;
     }
 }

@@ -163,7 +163,7 @@ public class Series<T> : IPandas<T> {
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <exception cref="OverflowException"></exception>
     public Series(List<T> values) {
-        DefaultControlExceptions(values, text: "Values");
+        Controller.DefaultControlExceptions(values, _limit, text: "Values");
         Init();
         // aggiungiamo gli indici come stringhe
         // per ogni valore nell'array, aggiungiamo il valore e l'indice come stringa
@@ -209,8 +209,8 @@ public class Series<T> : IPandas<T> {
         if (values.Count != indices.Count) {
             throw new ArgumentException("Length of values and indices must be the same.");
         }
-        DefaultControlExceptions(values, text:"Values");
-        DefaultControlExceptions(indices, text:"Indices");
+        Controller.DefaultControlExceptions(values, _limit, text:"Values");
+        Controller.DefaultControlExceptions(indices, _limit, text:"Indices");
 
         for (int i = 0; i < values.Count; i++) {
             Add(indices[i], values[i]);
@@ -349,7 +349,7 @@ public class Series<T> : IPandas<T> {
                 throw new KeyNotFoundException("The series is empty.");
             }
             // controlliamo le eccezioni di default per il nuovo indice
-            DefaultControlExceptions(newIndecies, text:"New Index");
+            Controller.DefaultControlExceptions(newIndecies, _limit, text:"New Index");
             // se il nuovo indice non ha la stessa lunghezza dei valori, lanciamo un'eccezione
             if (newIndecies.Count != GetIndices().Count) {
                 throw new ArgumentException("Length of new indices must be the same as the number of values.");
@@ -430,52 +430,6 @@ public class Series<T> : IPandas<T> {
             sb.AppendLine($"{kvp.Key}\t{kvp.Value}");
         }
         return sb.ToString();
-    }
-    #endregion
-
-    #region "Controllo delle eccezioni di default"
-    // metodo per controllare le eccezioni di default
-    /// <summary>
-    /// Default control exceptions for the series.
-    /// /summary>
-    /// <param name="list"></param>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="KeyNotFoundException"></exception>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <exception cref="OverflowException"></exception>
-    private void DefaultControlExceptions(List<T> list, string text = "Values") {
-        if (list == null) {
-            throw new ArgumentNullException($"{text} cannot be null.");
-        }
-        if (list.Count == 0)  {
-            throw new KeyNotFoundException($"{text} cannot be empty.");
-        }
-        if (list.Count < 0) {
-            throw new ArgumentOutOfRangeException($"Length of {text} cannot be negative.");
-        }
-        if (list.Count > _limit) {
-            throw new OverflowException($"Length of {text} exceeds maximum limit.");
-        }
-    }
-
-    private void DefaultControlExceptions(List<string> indices, string text = "Indices") {
-        if (indices == null) {
-            throw new ArgumentNullException($"{text} cannot be null.");
-        }
-        if (indices.Count == 0) {
-            throw new KeyNotFoundException($"{text} cannot be empty.");
-        }
-        if (indices.Count < 0) {
-            throw new ArgumentOutOfRangeException($"Length of {text} cannot be negative.");
-        }
-        if (indices.Count > _limit) {
-            throw new OverflowException($"Length of {text} exceeds maximum limit.");
-        }
-    }
-
-    public static explicit operator Series<T>(Series<string?> v)
-    {
-        throw new NotImplementedException();
     }
     #endregion
 }
