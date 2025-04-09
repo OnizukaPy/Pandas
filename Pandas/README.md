@@ -96,7 +96,7 @@ pandas.Series
 
   - Binary operator functions (Operator)
 
-    * [ ] Add:                    Add two series.
+    * [x] Add:                    Add two series.
     * [ ] Subtract:               Subtract two series.
     * [ ] Multiply:               Multiply two series.
     * [ ] Divide:                 Divide two series.

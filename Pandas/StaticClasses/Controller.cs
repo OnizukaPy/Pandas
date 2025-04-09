@@ -88,7 +88,7 @@ public static class Controller {
     /// <param name="value"></param>
     /// <returns></returns>
     public static bool IsNaN<T>(T value) {
-        if (value is Num.NaN || value is null || value is "") {
+        if (value is double.NaN || value is null || value is "") {
             return true;
         }
         return false;
@@ -103,6 +103,16 @@ public static class Controller {
     /// <returns></returns>
     public static bool IsNumber<T>(T value) {
         return value is int || value is double || value is float || value is decimal;
+    }
+
+    // metodo per verifiare se un Type è un numero
+    /// <summary>
+    /// Check if a Type is a number.
+    /// </summary>
+    /// <param name="type">Type to check.</param>
+    /// <returns></returns>
+    public static bool IsTypeNumber(Type type) {
+        return type == typeof(int) || type == typeof(double) || type == typeof(float) || type == typeof(decimal);
     }
 
     // metodo per verificare se la serie è vuota

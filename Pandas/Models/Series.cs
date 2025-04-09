@@ -246,12 +246,36 @@ public class Series<T> : IPandas<T> {
     /// </summary>
     /// <param name="value"></param>
     /// <param name="index"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
     public void Add(string index, T value) {
+        if (String.IsNullOrEmpty(index)) {
+            throw new ArgumentNullException("Index cannot be null or empty.");
+        }
+        /* if (value == null) {
+            throw new ArgumentNullException("Value cannot be null.");
+        } */
         if (_data.ContainsKey(index)) {
             throw new ArgumentException($"Index '{index}' already exists in the series.");
         }
         _data[index] = value;
+    }
+    // metodo per rimuovere un valore da un indice
+    /// <summary>
+    /// Remove a value from an index.
+    /// If the index does not exist, it will throw an exception.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    public void Remove(string index) {
+        if (String.IsNullOrEmpty(index)) {
+            throw new ArgumentNullException("Index cannot be null or empty.");
+        }
+        if (!_data.ContainsKey(index)) {
+            throw new ArgumentException($"Index '{index}' does not exist in the series.");
+        }
+        _data.Remove(index);
     }
     // Metodo per ottenere il numero di elementi nella serie
     /// <summary>
