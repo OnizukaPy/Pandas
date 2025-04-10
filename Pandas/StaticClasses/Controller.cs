@@ -46,7 +46,7 @@ public static class Controller {
     /// <returns></returns>
     public static bool IsUnique<T>(this Series<T> series) {
         CheckEmpty(series);
-        // per ogni valore nella serie, se è NaN, lo rimuoviamo
+        // controlliamo se i valori della serie sono unici
         return series.Values.Distinct().Count() == series.Values.Count();
     }
 

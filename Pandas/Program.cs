@@ -99,6 +99,13 @@ Console.WriteLine($"Moltiplicazione:\n{s5_3}");
 s5_4.DivideSeries(s6);
 Console.WriteLine($"Divisione:\n{s5_4}");
 
-var s7 = new Pd.Series<double>(new List<double> { double.NaN, 3.69, 4.36, 5.96, double.NaN }, new List<string> { "a", "b", "c", "d", "e" });
+var s7 = new Pd.Series<double>(new List<double> { double.NaN, 3, 4.36, 5.96, 2 }, new List<string> { "a", "b", "c", "d", "e" });
 s7.RoundSeries();
 Console.WriteLine($"Arrotondamento:\n{s7}");
+Console.WriteLine($"Numero di NaN:\n{s7.CountNaN()}");
+
+Console.WriteLine($"Numero di elementi unici:\n{s7.CountUnique(false)}");
+Console.WriteLine($"Lista: {String.Join(", ", s7.ListUnique(true))}");
+Console.WriteLine($"Media: {s7.Mean()}");
+Console.WriteLine($"Mediana: {s7.Median()}");
+Console.WriteLine($"Moda: {s7.Mode()}");

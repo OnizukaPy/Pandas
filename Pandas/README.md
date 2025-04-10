@@ -111,15 +111,22 @@ pandas.Series
 
     * [x] Sum:                   Return the sum of the series.
     * [x] Mean:                  Return the mean of the series.
-    * [ ] Median:                Return the median of the series.
+    * [x] Median:                Return the median of the series.
     * [x] Min:                   Return the minimum of the series.
     * [x] Max:                   Return the maximum of the series.
+    * [x] Var:                   Return the variance of the series.
     * [x] Std:                   Return the standard deviation of the series.
-    * [ ] Var:                   Return the variance of the series.
-    * [ ] Mode:                  Return the mode of the series.
-    * [ ] Prod:                  Return the product of the series.
+    * [x] Mode:                  Return the mode of the series.
+    * [x] Prod:                  Return the product of the series.
 
+ - Computations funtions (Computations)
 
+    * [x] Count:                 Return the number of non-NaN values in the series.
+    * [x] CountNaN:              Return the number of NaN values in the series.
+    * [x] CountUnique:           Return the number of unique values in the series.
+    * [x] UniqueToList:          Return the unique values in the series as a list.
+    * [ ] CountTrue:             Return the number of True values in the series.
+    * [ ] CountFalse:            Return the number of False values in the series.
 
 
    
