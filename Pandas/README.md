@@ -96,15 +96,32 @@ pandas.Series
 
   - Binary operator functions (Operator)
 
-    * [x] Add:                    Add two series.
-    * [ ] Subtract:               Subtract two series.
-    * [ ] Multiply:               Multiply two series.
-    * [ ] Divide:                 Divide two series.
-    * [ ] Modulus:                Modulus two series.
-    * [ ] Power:                  Power two series.
-    * [ ] BitwiseAnd:             Bitwise and two series.
-    * [ ] BitwiseOr:              Bitwise or two series.
-    * [ ] BitwiseXor:             Bitwise xor two series.
+    * [x] AddSeries:              Add two series.
+    * [x] SubSeries:              Subtract two series.
+    * [x] MultiplySeries:         Multiply two series.
+    * [x] DivideSeries:           Divide two series.
+    * [x] RoundSeries:            Round a Series to the given number of decimals.
+    * [x] EqualsTo:               Return Equal to of series and other, element-wise 
+    * [x] GreaterThan:            Return Greater than of series and other, element-wise
+    * [x] GreaterThanOrEqual:     Return Greater than or equal to of series and other, element-wise
+    * [x] LessThan:               Return Less than of series and other, element-wise
+    * [x] LessThanOrEqual:        Return Less than or equal to of series and other, element-wise
+
+ - Matematihe functions (Math)
+
+    * [x] Sum:                   Return the sum of the series.
+    * [x] Mean:                  Return the mean of the series.
+    * [ ] Median:                Return the median of the series.
+    * [x] Min:                   Return the minimum of the series.
+    * [x] Max:                   Return the maximum of the series.
+    * [x] Std:                   Return the standard deviation of the series.
+    * [ ] Var:                   Return the variance of the series.
+    * [ ] Mode:                  Return the mode of the series.
+    * [ ] Prod:                  Return the product of the series.
+
+
+
+
    
 # Nuove Implementazioni
 

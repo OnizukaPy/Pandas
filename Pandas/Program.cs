@@ -43,7 +43,7 @@ Console.WriteLine(s.dtype);
 
 
 Console.WriteLine("Proviamo a sostituire i NaN con la media");
-s.FillNaN(s.Mean());
+s.FillNaN((float)s.Mean());
 Console.WriteLine(s.ToString());
 
 Console.WriteLine("Proviamo con una serie di stringhe");
@@ -69,10 +69,36 @@ Console.WriteLine($"Indice di s3: {s3.Index}");
 
 //! Rimanere su questo metodo fino a quando non è concluso.
 var s4 = s.Copy(false);
+Console.WriteLine(s.ToString());
+s4["7"] = -double.NaN;
 Console.WriteLine(s4.ToString());
-s4["7"] = Single.NaN;
-s4.AddOther(s);
-Console.WriteLine(s4.ToString());
+s.AddSeries(s4/* , fill_NaN_With: 52 */);
+Console.WriteLine(s.ToString());
 
 
 
+Console.WriteLine($"{double.NaN} + {double.NaN} = {double.NaN + double.NaN}");
+
+// creiamo due nuove serie con dei valori NaN
+var s5 = new Pd.Series<double>(new List<double> { 1, double.NaN, 3, 4, 5 }, new List<string> { "a", "b", "c", "d", "e" });
+var s5_2 = new Pd.Series<double>(new List<double> { 1, double.NaN, 3, 4, 5 }, new List<string> { "a", "b", "c", "d", "e" });
+var s5_3 = new Pd.Series<double>(new List<double> { 1, double.NaN, 3, 4, 5 }, new List<string> { "a", "b", "c", "d", "e" });
+var s5_4 = new Pd.Series<double>(new List<double> { 1, double.NaN, 3, 4, 5 }, new List<string> { "a", "b", "c", "d", "e" });
+var s6 = new Pd.Series<double>(new List<double> { double.NaN, 3, 4, 5, double.NaN }, new List<string> { "a", "b", "c", "d", "e" });
+
+var equals = s5.EqualsTo(s5_2, IsNaN: true);
+Console.WriteLine($"s5 == s5_2:\n{equals.ToString()}");
+Console.WriteLine($"s5:\n{s5.ToString()}");
+Console.WriteLine($"s6:\n{s6.ToString()}");
+s5.AddSeries(s6);
+Console.WriteLine($"Somma:\n{s5}");
+s5_2.SubtractSeries(s6);
+Console.WriteLine($"Sottrazione:\n{s5_2}");
+s5_3.MultiplySeries(s6);
+Console.WriteLine($"Moltiplicazione:\n{s5_3}");
+s5_4.DivideSeries(s6);
+Console.WriteLine($"Divisione:\n{s5_4}");
+
+var s7 = new Pd.Series<double>(new List<double> { double.NaN, 3.69, 4.36, 5.96, double.NaN }, new List<string> { "a", "b", "c", "d", "e" });
+s7.RoundSeries();
+Console.WriteLine($"Arrotondamento:\n{s7}");

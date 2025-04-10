@@ -88,7 +88,7 @@ public static class Controller {
     /// <param name="value"></param>
     /// <returns></returns>
     public static bool IsNaN<T>(T value) {
-        if (value is double.NaN || value is null || value is "") {
+        if (value is double.NaN || value is float.NaN || value is null || value is "") {
             return true;
         }
         return false;
@@ -113,6 +113,34 @@ public static class Controller {
     /// <returns></returns>
     public static bool IsTypeNumber(Type type) {
         return type == typeof(int) || type == typeof(double) || type == typeof(float) || type == typeof(decimal);
+    }
+
+    // metodo per verificare se una serie è numerica sollevando una eccezione
+    /// <summary>
+    /// Check if a series is numeric and throw an exception if it is not.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="series">Series to check.</param>
+    /// <exception cref="Exception">The two series are not numeric.</exception>
+    
+    public static void CheckIsTypeNumber<T>(Series<T> series) {
+        if (!Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
+            throw new Exception("The two series are not numeric.");
+        }
+    }
+
+    // metodo per verificare se due serie sono dello stesso tipo
+    /// <summary>
+    /// Check if two series are the same type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="series">First series.</param>
+    /// <param name="other">Second series.</param>
+    /// <exception cref="Exception">The two series are not the same type.</exception>
+    public static void CheckIfTypesAreEquals<T>(Series<T> series, Series<T> other) {
+        if (series.Values.GetTypeOfData() != other.Values.GetTypeOfData()) {
+            throw new Exception("The two series are not the same type.");
+        }
     }
 
     // metodo per verificare se la serie è vuota

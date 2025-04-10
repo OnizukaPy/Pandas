@@ -15,7 +15,7 @@ public static class Math {
         Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => Controller.IsNumber(item))) {
+        if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
             double sum = 0;
             foreach (var item in series.Values) {
                 sum += Convert.ToDouble(item);
@@ -38,8 +38,9 @@ public static class Math {
         Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => Controller.IsNumber(item))) {
+        if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
             if (series.size > 0)
+                // calcoliamo la media degli elementi della serie e rendiamola di tipo T
                 return series.Sum() / series.size;
             else
                 // eccezione non si può dividere per zero
@@ -61,7 +62,7 @@ public static class Math {
         Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => Controller.IsNumber(item))) {
+        if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
             double max = series.Values.Max(item => Convert.ToDouble(item));
             return max;
         } else {
@@ -81,7 +82,7 @@ public static class Math {
         Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => Controller.IsNumber(item))) {
+        if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
             double min = series.Values.Min(item => Convert.ToDouble(item));
             return min;
         } else {
@@ -101,7 +102,7 @@ public static class Math {
         Controller.CheckEmpty(series);
         series = RemoveNaNs(series);
 
-        if (series.Values.All(item => Controller.IsNumber(item)) && series.size > 1) {
+        if (Controller.IsTypeNumber(series.Values.GetTypeOfData()) && series.size > 1) {
             double mean = series.Mean();
             double variance = series.Values.Sum(item =>
                         System.Math.Pow(Convert.ToDouble(item) - mean, 2)) / (series.size - 1
