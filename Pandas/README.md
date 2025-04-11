@@ -48,7 +48,7 @@ pandas.Series
  - Attributes
 
     * [x] T:                        Return the transpose, which is by definition self.
-    * **[x] at:                       Access a single value for a row/column label pair.**  (Implementata come indexer)
+    * [x] at:                       Access a single value for a row/column label pair.  (Implementata come indexer)
     * [x] dtype:                    Return the dtype object of the underlying data.
     * [x] empty:                    Indicator whether Series/DataFrame is empty.
     * [x] hasnans:                  Return True if there are any NaNs.
@@ -119,16 +119,24 @@ pandas.Series
     * [x] Mode:                  Return the mode of the series.
     * [x] Prod:                  Return the product of the series.
 
- - Computations funtions (Computations)
+ - Computations funtions (Computatator)
 
     * [x] Count:                 Return the number of non-NaN values in the series.
     * [x] CountNaN:              Return the number of NaN values in the series.
     * [x] CountUnique:           Return the number of unique values in the series.
     * [x] UniqueToList:          Return the unique values in the series as a list.
-    * [ ] CountTrue:             Return the number of True values in the series.
-    * [ ] CountFalse:            Return the number of False values in the series.
 
+ - Function application, GroupBy & window (Applicator)
 
+    * [x] Apply:                 Apply a function to the series.
+    * [x] First:                 Return the first n rows of the series.
+    * [x] FirstOrDefault:        Return the first n rows of the series or a default value if the series is empty.
+    * [x] Where:                 Return the rows of the series that match a condition.
+
+ - Accessors (Accessor)
+
+    * [ ] Str:                   Access the string methods of the series.
+    * [ ] dt:                    Access the datetime methods of the series.
    
 # Nuove Implementazioni
 

@@ -117,7 +117,7 @@ public class Series<T> : IPandas<T> {
     // per fare in modo che richiamando la serie con la seguente sintassi
     // s["a"] = 1; funzioni come un dizionario
     /// <summary>
-    /// Indexer to access the series by index.
+    /// Indexer to access the series by index as a string.
     /// </summary>
     /// <param name="index"></param>
     /// <returns></returns>
@@ -135,6 +135,30 @@ public class Series<T> : IPandas<T> {
                 throw new InvalidOperationException($"Cannot add more than {_limit} elements to the series.");
             }
         }
+    }
+
+    // metodo At per restituire il valore di una serie ad un indice intero
+    // s[0] = 1; funzioni come un dizionario
+    /// <summary>
+    /// Indexer to access the series by index as a int.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public T this[int index] {
+        get { return GetValue(Index[index]); }
+        set { 
+            // se l'indice esiste già, lo aggiorniamo con 
+            // il nuovo valore
+            // altrimenti lo aggiungiamo alla serie
+            if (_data.ContainsKey(Index[index])) {
+                _data[Index[index]] = value;
+            } else if (_data.Count < _limit) {
+                Add(Index[index], value); 
+            } else {
+                throw new InvalidOperationException($"Cannot add more than {_limit} elements to the series.");
+            }
+        }
+
     }
     #endregion
 
@@ -239,9 +263,10 @@ public class Series<T> : IPandas<T> {
         }
         _limit = limit;
     }
+
     // Metodo per aggiungere un valore a un indice
     /// <summary>
-    /// Add a value to an index.
+    /// Add a value to an index as a string.
     /// If the index already exists, it will be updated with the new value.
     /// </summary>
     /// <param name="value"></param>
@@ -260,9 +285,31 @@ public class Series<T> : IPandas<T> {
         }
         _data[index] = value;
     }
+
+    /// <summary>
+    /// Add a value to an index as an int.
+    /// If the index already exists, it will be updated with the new value.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="index"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    public void Add(int index, T value) {
+        if (String.IsNullOrEmpty(Index[index])) {
+            throw new ArgumentNullException("Index cannot be null or empty.");
+        }
+        /* if (value == null) {
+            throw new ArgumentNullException("Value cannot be null.");
+        } */
+        if (_data.ContainsKey(Index[index])) {
+            throw new ArgumentException($"Index '{Index[index]}' already exists in the series.");
+        }
+        _data[Index[index]] = value;
+    }
+
     // metodo per rimuovere un valore da un indice
     /// <summary>
-    /// Remove a value from an index.
+    /// Remove a value from an index as a string.
     /// If the index does not exist, it will throw an exception.
     /// </summary>
     /// <param name="index"></param>
@@ -277,6 +324,24 @@ public class Series<T> : IPandas<T> {
         }
         _data.Remove(index);
     }
+
+    /// <summary>
+    /// Remove a value from an index as an int.
+    /// If the index does not exist, it will throw an exception.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    public void Remove(int index) {
+        if (String.IsNullOrEmpty(Index[index])) {
+            throw new ArgumentNullException("Index cannot be null or empty.");
+        }
+        if (!_data.ContainsKey(Index[index])) {
+            throw new ArgumentException($"Index '{Index[index]}' does not exist in the series.");
+        }
+        _data.Remove(Index[index]);
+    }
+
     // Metodo per ottenere il numero di elementi nella serie
     /// <summary>
     /// Get the number of elements in the series.
