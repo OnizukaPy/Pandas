@@ -132,12 +132,42 @@ pandas.Series
     * [x] First:                 Return the first n rows of the series.
     * [x] FirstOrDefault:        Return the first n rows of the series or a default value if the series is empty.
     * [x] Where:                 Return the rows of the series that match a condition.
+    * [ ] OrderBy:               Return the rows of the series ordered by a condition.
 
  - Accessors (Accessor)
 
     * [ ] Str:                   Access the string methods of the series.
     * [ ] dt:                    Access the datetime methods of the series.
    
+# DataFrame
+
+## Documentazione
+
+[Guida ufficiale](https://pandas.pydata.org/docs/reference/frame.html)
+
+Un DataFrame è una tabella bidimensionale i cui elementi sono etichettati con un index e un columns. 
+In questo senso, il DataFrame opera un po' come una lista di liste (si possono accedere gli elementi in sequenza) e un po' come un dizionario (si può accedere ad un elemento tramite il suo indice, che opera come una chiave e non deve essere per forza numerico)
+Esempio:
+
+```python
+import pandas as pd
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]}, index=['a', 'b', 'c'])
+print(df)
+```
+Output:
+```
+   A  B
+a  1  4
+b  2  5
+c  3  6
+```
+
+Un DataFrame altro non è che una lista di Series, dove ogni Series rappresenta una colonna del DataFrame, in comune hanno lo stesso indice. Il nome della serie è il nome della colonna.
+
+## Funzionalità
+
+
+
 # Nuove Implementazioni
 
 ## MultiIndex

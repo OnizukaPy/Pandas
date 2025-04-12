@@ -87,6 +87,39 @@ public static class Applicator {
         return result;
     }
 
+    // metodo per replicare OrderBy
+    /// <summary>
+    /// Returns a new series ordered by index.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="series"></param>
+    /// <param name="mode">The mode can be "asc" ascendent or "desc" descendent</param>
+    /// <exception cref="InvalidOperationException">Thrown when no element satisfies the condition.</exception>
+    /// <returns></returns>
+    public static Series<T> OrderByIndex<T>(this Series<T> series, string mode = "asc") {
+        Controller.CheckEmpty(series);
+        var result = new Series<T>();
+        // sorriamo tutto l'indice e ordiniamolo, ordinando anche i valori
+        if (mode != "asc" && mode != "desc") {
+            throw new ArgumentException("The mode must be 'asc' or 'desc'");
+        }
+        var orderedIndex = new List<string>();
+        if (mode.Equals("desc")) {
+            orderedIndex = series.Index.OrderByDescending(x => x).ToList();
+        } else {
+            orderedIndex = series.Index.OrderBy(x => x).ToList();
+        }
+        var orderedValues = new List<T>();
+        orderedIndex.ForEach(index => {
+            orderedValues.Add(series[index]);
+        });
+        // creiamo una nuova serie con i valori ordinati
+        for (int i = 0; i < orderedIndex.Count; i++) {
+            result.Add(orderedIndex[i], orderedValues[i]);
+        }
+        result.Name = series.Name;
+        return result;
+    }
     
 
     #endregion

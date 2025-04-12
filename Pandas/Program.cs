@@ -4,7 +4,7 @@ using System.Collections.Frozen;
 
 Console.WriteLine("proviamo a fare un po' di pandas in c#");
 
-var s = new Pd.Series<double>(new List<double> {1, double.NaN, 3, 4, 5}, new List<string> { "a", "b", "c", "d", "e" });
+/* var s = new Pd.Series<double>(new List<double> {1, double.NaN, 3, 4, 5}, new List<string> { "a", "b", "c", "d", "e" });
 Console.WriteLine(s.ToString());
 
 Console.WriteLine(s.Index);
@@ -72,7 +72,7 @@ var s4 = s.Copy(false);
 Console.WriteLine(s.ToString());
 s4["7"] = -double.NaN;
 Console.WriteLine(s4.ToString());
-s.AddSeries(s4/* , fill_NaN_With: 52 */);
+s.AddSeries(s4);
 Console.WriteLine(s.ToString());
 
 
@@ -115,4 +115,44 @@ Console.WriteLine($"s7:\n{s7}");
 var s8 = s7.Apply(x => x * 2);
 Console.WriteLine($"Applicazione funzione:\n{s8}");
 var s9 = s7.Where(x => x > 8);
-Console.WriteLine($"Filtraggio:\n{s9}");
+Console.WriteLine($"Filtraggio:\n{s9}"); */
+
+// Creiamo un DataFrame
+var city = new Pd.Series<object>(
+    ["Roma", "Milano", "Torino", "Napoli", "Firenze"], 
+    ["1", "2", "3", "4", "5"],
+    "City"
+    );
+var population = new Pd.Series<object>(
+    [2873000, 1378000, 870000, 960000, 380000], 
+    ["1", "2", "3", "4", "5"],
+    "Population"
+    );
+var area = new Pd.Series<object>(
+    [1285, 181, 130, 117, 102], 
+    ["1", "2", "3", "4", "5"],
+    "Area"
+    );
+var df = new Pd.DataFrame<object>([city, population, area]);
+Console.WriteLine(df.ToString());
+
+object obj = new {
+    Name = "Mario",
+    Age = 30,
+    City = "Roma"
+};
+
+var pos = df["Population"].AsType<double>();
+Console.WriteLine($"Posizione:\n{pos}\n{pos.Sum()}");
+var posObj = df["Population"].AsType<object>();
+Console.WriteLine($"Posizione:\n{posObj}\n{posObj.dtype}");
+df.AddColumn("prova", posObj);
+Console.WriteLine($"DataFrame:\n{df.ToString()}");
+Console.WriteLine($"Columns:\n[{String.Join(", ", df.Columns)}]");
+Console.WriteLine($"Rows 2:\n{df[2]}");
+
+// aggiungiamo una riga
+df.AddRow(new Pd.Row(new List<object> { "Bologna", 880000, 150, 880000}), "7");
+Console.WriteLine($"DataFrame:\n{df.ToString()}");
+
+Console.WriteLine($"DataFrame:\n{df[["City", "Population"]][3]}");

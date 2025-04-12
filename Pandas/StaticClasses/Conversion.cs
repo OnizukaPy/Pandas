@@ -3,6 +3,35 @@ namespace Pandas.StaticClasses;
 
 public static class Conversion {
 
+    // metoso AsType per convertire i valori di una generica (object) serie in un altro tipo
+    /// <summary>
+    /// Convert the values of the generi series (object) to another type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="series">Series to convert.</param>
+    /// <param name="type">Type to convert to.</param>
+    /// <returns></returns>
+    public static Series<T> AsType<T>(this Series<object> series) {
+        Controller.CheckEmpty(series);
+        // controlliamo se il tipo è valido
+        if (typeof(T) != null) {
+            var newSeries = new Series<T>(series.Values.Select(item => {
+                // controlliamo se il valore è NaN
+                if (Controller.IsNaN(item)) {
+                    return default!;
+                } else {
+                    // convertiamo il valore in un altro tipo
+                    return (T)Convert.ChangeType(item, typeof(T));
+                }
+            }).ToList(), series.Index.ToList()) {
+                Name = series.Name,
+            };
+            return newSeries;
+        } else {
+            throw new ArgumentNullException(typeof(T).Name, "Type cannot be null");
+        }
+    }
+
     // metodo per rimuovere i NaN da una serie
     /// <summary>
     /// Remove NaN values from a list of objects.

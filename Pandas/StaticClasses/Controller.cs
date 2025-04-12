@@ -143,6 +143,19 @@ public static class Controller {
         }
     }
 
+    // metodo per verificare se una lista di serie è vuota
+    /// <summary>
+    /// Check if a list of series is empty.
+    /// </summary>
+    /// <param name="series">List of series to check.</param>
+    /// <returns></returns>
+    public static void CheckEmptyList<T>(List<Series<T>> series) {
+        series.ForEach(s => {
+            // controlliamo che la serie non sia nulla
+            CheckEmpty(s);
+        });
+    }
+
     // metodo per verificare se la serie è vuota
     /// <summary>
     /// Check if a series is empty.
