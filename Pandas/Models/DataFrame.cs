@@ -36,7 +36,7 @@ public class DataFrame<T> : IPandas<T> {
         Index = new Index(new List<string>());
     }
 
-    #region Costruttore
+    #region Costruttori
     // Costruttore di default
     /// <summary>
     /// Default constructor for DataFrame.
@@ -47,6 +47,30 @@ public class DataFrame<T> : IPandas<T> {
     }
 
     // Costruttore con parametri
+
+    // costruttore solo la lista di colonne
+    /// <summary>
+    /// Constructor for DataFrame, with a list of columns.
+    /// </summary>
+    /// <param name="columns"></param>
+    /// <exception cref="ArgumentNullException">Columns cannot be null</exception>
+    public DataFrame(List<string> columns) {
+        // Inizializziamo il DataFrame
+        Init();
+        // controlliamo che le colonne non siano nulle
+        if (columns == null) {
+            throw new ArgumentNullException(nameof(columns), "Columns cannot be null");
+        }
+        // aggiungiamo le colonne al DataFrame
+        foreach (var column in columns) {
+            CheckColumnValue(column);
+            CheckColumAlreadyExists(column);
+            var newSeries = new Series<T>(new List<T>());
+            newSeries.Name = column;
+            _dataFrame.Add(column, newSeries);
+        }
+    }
+
     // costruttore che ha come parametro una lista di serie
     /// <summary>
     /// Constructor for DataFrame, with a list of Series.
@@ -167,8 +191,11 @@ public class DataFrame<T> : IPandas<T> {
         }
         
         for (int i = 0; i < row.Count; i++) {
+            // alla serie della colonna aggiungiamo un elemento.
+            // l'elemento andrà convertito al valore T
             _dataFrame[Columns[i]].Add(index, (T)row[i]);
         }
+        //? Non so se questo serve a questo punto, dato he l'index è già stato creato
         Index.Add(index);
     }
     #endregion
@@ -229,6 +256,12 @@ public class DataFrame<T> : IPandas<T> {
     }
 
     // indexer per restituire il DataFrame delle sole colonne specificate df[[col1, col2]]
+    /// <summary>
+    /// Indexer for DataFrame.
+    /// Allows access to the DataFrame by a list of columns.
+    /// </summary>
+    /// <param name="columns"></param>
+    /// <returns></returns>
     public DataFrame<T> this[List<string> columns] {
         get {
             // controlliamo che le colonne siano valide
