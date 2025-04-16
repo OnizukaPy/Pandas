@@ -13,7 +13,7 @@ public static class Math {
     /// <returns></returns>
     public static double Sum<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -37,7 +37,7 @@ public static class Math {
     /// <returns></returns>
     public static double Prod<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -61,7 +61,7 @@ public static class Math {
     /// <returns></returns>
     public static double Mean<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -86,7 +86,7 @@ public static class Math {
     /// <returns></returns>
     public static double Median<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -117,7 +117,7 @@ public static class Math {
     /// <returns></returns>
     public static double Mode<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -141,7 +141,7 @@ public static class Math {
     /// <returns></returns>
     public static double Max<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -162,7 +162,7 @@ public static class Math {
     /// <returns></returns>
     public static double Min<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (Controller.IsTypeNumber(series.Values.GetTypeOfData())) {
@@ -183,7 +183,7 @@ public static class Math {
     /// <returns></returns>
     public static double Var<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
 
         if (series.size <= 1) {
@@ -211,7 +211,7 @@ public static class Math {
     /// <returns></returns>
     public static double Std<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         series = RemoveNaNs(series);
         var variance = series.Var();
         if (Controller.IsNaN(variance)) {

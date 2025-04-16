@@ -118,7 +118,7 @@ var s9 = s7.Where(x => x > 8);
 Console.WriteLine($"Filtraggio:\n{s9}"); */
 
 // Creiamo un DataFrame
-var city = new Pd.Series<object>(
+/* var city = new Pd.Series<object>(
     ["Roma", "Milano", "Torino", "Napoli", "Firenze"], 
     ["1", "2", "3", "4", "5"],
     "City"
@@ -132,8 +132,30 @@ var area = new Pd.Series<object>(
     [1285, 181, 130, 117, 102], 
     ["1", "2", "3", "4", "5"],
     "Area"
+    ); */
+var city = new List<object>(
+    ["Roma", "Milano", "Torino", "Napoli", "Firenze"]
     );
-var df = new Pd.DataFrame<object>([city, population, area]);
+var population = new List<object>(
+    [2873000, 1378000, 870000, 960000, 380000]
+    );
+var area = new List<object>(
+    [1285, 181, 130, 117, 102]
+    );
+/* var dataFrame = new Dictionary<string, Pd.Series<object>>()
+{
+    { "City", city },
+    { "Population", population },
+    { "Area", area }
+}; */
+var dataFrame = new List<List<object>>()
+{
+    city,
+    population,
+    area
+};
+var columns = new List<string> { "City", "Population", "Area" };
+var df = new Pd.DataFrame<object>(dataFrame, columns);
 Console.WriteLine(df.ToString());
 
 object obj = new {
@@ -152,7 +174,10 @@ Console.WriteLine($"Columns:\n[{String.Join(", ", df.Columns)}]");
 Console.WriteLine($"Rows 2:\n{df[2]}");
 
 // aggiungiamo una riga
-df.AddRow(new Pd.Row(new List<object> { "Bologna", 880000, 150, 880000}), "7");
+df.AddRow(new Pd.Row(new List<object> { "Bologna", 880000, 150, 880000}));
 Console.WriteLine($"DataFrame:\n{df.ToString()}");
 
 Console.WriteLine($"DataFrame:\n{df[["City", "Population"]][3]}");
+
+df["Population"][3] = 85;
+Console.WriteLine($"DataFrame:\n{df.ToString()}");

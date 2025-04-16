@@ -12,7 +12,7 @@ public static class Computator {
     /// <param name="series">Series to count NaN observations.</param>
     /// <returns></returns>
     public static int CountNaN<T>(this Series<T> series) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         if (series.HasNaNs()) {
             // se ci sono NaN nella serie, contiamo gli elementi non NaN
             return series.Values.Count(x => Controller.IsNaN(x));
@@ -28,7 +28,7 @@ public static class Computator {
     /// <param name="series">Series to count non-NA/null observations.</param>
     /// <returns></returns>
     public static int Count<T>(this Series<T> series) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         // se ci sono NaN nella serie, contiamo gli elementi non NaN
         return series.size - CountNaN(series);
      
@@ -43,7 +43,7 @@ public static class Computator {
     /// <param name="checkNaN">If true, drop NaN observation</param>
     /// <returns></returns>
     public static int CountUnique<T>(this Series<T> series, bool checkNaN = false) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         if (checkNaN) {
             // se ci sono NaN nella serie li rimuoviamo.
             series = Math.RemoveNaNs(series);
@@ -65,7 +65,7 @@ public static class Computator {
     /// <remarks>Default is false.</remarks>
     /// <returns></returns>
     public static List<T> ListUnique<T>(this Series<T> series, bool checkNaN = false) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         if (checkNaN) {
             // se ci sono NaN nella serie li rimuoviamo.
             series = Math.RemoveNaNs(series);

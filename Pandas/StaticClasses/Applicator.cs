@@ -13,7 +13,7 @@ public static class Applicator {
     /// <returns></returns>
     public static Series<T> Apply<T>(this Series<T> series, Func<T, T> func) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
 
         var result = series.Copy(true);
         for (int i = 0; i < result.size; i++) {
@@ -34,7 +34,7 @@ public static class Applicator {
     /// <exception cref="InvalidOperationException">Thrown when no element satisfies the condition.</exception>
     /// <returns></returns>
     public static T First<T>(this Series<T> series, Func<T, bool> predicate) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         for (int i = 0; i < series.size; i++) {
             if (predicate(series[i])) {
                 return series[i];
@@ -53,7 +53,7 @@ public static class Applicator {
     /// <exception cref="InvalidOperationException">Thrown when no element satisfies the condition.</exception>
     /// <returns></returns>
     public static T? FirstOrDefault<T>(this Series<T> series, Func<T, bool> predicate) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         for (int i = 0; i < series.size; i++) {
             if (predicate(series[i])) {
                 return series[i];
@@ -72,7 +72,7 @@ public static class Applicator {
     /// <exception cref="InvalidOperationException">Thrown when no element satisfies the condition.</exception>
     /// <returns></returns>
     public static Series<T> Where<T>(this Series<T> series, Func<T, bool> predicate) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         var result = new Series<T>();
 
         series.Index.ForEach(index => {
@@ -97,7 +97,7 @@ public static class Applicator {
     /// <exception cref="InvalidOperationException">Thrown when no element satisfies the condition.</exception>
     /// <returns></returns>
     public static Series<T> OrderByIndex<T>(this Series<T> series, string mode = "asc") {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         var result = new Series<T>();
         // sorriamo tutto l'indice e ordiniamolo, ordinando anche i valori
         if (mode != "asc" && mode != "desc") {

@@ -14,8 +14,8 @@ public static class Controller {
     /// <param name="other">Other series to check.</param>
     /// <returns></returns>
     public static bool Equals<T>(this Series<T> series, Series<T> other, bool deep = true) {
-        CheckEmpty(series);
-        CheckEmpty(other);
+        CheckSeriesEmpty(series);
+        CheckSeriesEmpty(other);
         // controlliamo che le due serie siano della stessa lunghezza
         if (series.size != other.size) {
             return false;
@@ -45,7 +45,7 @@ public static class Controller {
     /// <param name="series">Series to check.</param>
     /// <returns></returns>
     public static bool IsUnique<T>(this Series<T> series) {
-        CheckEmpty(series);
+        CheckSeriesEmpty(series);
         // controlliamo se i valori della serie sono unici
         return series.Values.Distinct().Count() == series.Values.Count();
     }
@@ -58,7 +58,7 @@ public static class Controller {
     /// <returns></returns>
     public static bool HasNaNs<T>(this Series<T> series) {
 
-        CheckEmpty(series);
+        CheckSeriesEmpty(series);
 
         // per ogni valore nella serie, se è NaN, lo rimuoviamo
         bool hasNaN = false;
@@ -152,7 +152,7 @@ public static class Controller {
     public static void CheckEmptyList<T>(List<Series<T>> series) {
         series.ForEach(s => {
             // controlliamo che la serie non sia nulla
-            CheckEmpty(s);
+            CheckSeriesEmpty(s);
         });
     }
 
@@ -162,7 +162,7 @@ public static class Controller {
     /// </summary>
     /// <param name="series">Series to check.</param>
     /// <exception cref="KeyNotFoundException">Series is empty.</exception>
-    public static void CheckEmpty<T>(Series<T> series) {
+    public static void CheckSeriesEmpty<T>(Series<T> series) {
         // controlliamo che la serie non sia nulla
         CheckNull(series);
         // controlliamo che la serie non sia vuota

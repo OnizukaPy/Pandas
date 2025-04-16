@@ -12,7 +12,7 @@ public static class Conversion {
     /// <param name="type">Type to convert to.</param>
     /// <returns></returns>
     public static Series<T> AsType<T>(this Series<object> series) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         // controlliamo se il tipo è valido
         if (typeof(T) != null) {
             var newSeries = new Series<T>(series.Values.Select(item => {
@@ -40,7 +40,7 @@ public static class Conversion {
     /// <returns></returns>
     public static Series<T> RemoveNaN<T>(this Series<T> series) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
 
         // per ogni valore nella serie, se è NaN, lo rimuoviamo
         var newSeries = new Series<T>(
@@ -59,7 +59,7 @@ public static class Conversion {
     /// <param name="value"></param>
     public static void FillNaN<T>(this Series<T> series, T value) {
 
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         Controller.CheckValueIsNaN(value);
 
         // per ogni valore nella serie, se è NaN, lo sostituiamo con il valore specificato
@@ -83,7 +83,7 @@ public static class Conversion {
     /// <param name="series">Series to copy.</param>
     /// <returns></returns>
     public static Series<T> Copy<T>(this Series<T> series, bool deep = true) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         if (deep) {
             return series;
         } else {
@@ -101,7 +101,7 @@ public static class Conversion {
     /// <param name="series">Series to convert.</param>
     /// <returns></returns>
     public static List<T> ToList<T>(this Series<T> series) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         // facciamo una copia dei valori della serie in una nuova lista
         // e restituiamo la lista
         var newList = new List<T>(series.Values);
@@ -116,7 +116,7 @@ public static class Conversion {
     /// <param name="series">Series to convert.</param>
     /// <returns></returns>
     public static Dictionary<string, T> ToDict<T>(this Series<T> series) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         // facciamo una copia dei valori della serie in un nuovo dizionario
         // e restituiamo il dizionario
         var newDict = new Dictionary<string, T>();

@@ -102,20 +102,83 @@ public class DataFrame<T> : IPandas<T> {
     }
 
     // costruttore con una lista di liste di dati e una lista di colonne
+    /// <summary>
+    /// Constructor for DataFrame, with a list of lists of data and a list of columns.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="columns"></param>
+    /// <exception cref="ArgumentException"></exception>
     public DataFrame(List<List<T>> data, List<string> columns) {
         // Inizializziamo il DataFrame
         Init();
-        // controlliamo che i dati abbiano lo stesso numero di colonne
-        if (data.Count > 0) {
-            data.ForEach(d => {
-                if (d.Count != columns.Count) {
-                    throw new ArgumentException("All rows must have the same number of columns");
-                }
-            });
+        // controlliamo che i dati abbiano lo stesso numero di righe
+        if (data.Count == 0) {
+            throw new ArgumentException("Data cannot be empty");
+        }
+        // controlliamo che le colonne non siano nulle
+        if (columns == null) {
+            throw new ArgumentNullException(nameof(columns), "Columns cannot be null");
+        }
+        var nRighe = data[0].Count;
+        for (int i = 0; i < columns.Count; i++)  {
+            
+            var column = columns[i];
+            // controlliamo che la colonna non sia nulla
+            CheckColumnValue(column);
+            // controlliamo che la colonna non esista già
+            CheckColumAlreadyExists(column);
+            // controlliamo che ogni lista abbia la stessa grandezza
+            var series = new Pd.Series<T>(data[i].ToList());
+            // controlliamo che la riga non sia nulla
+            Controller.CheckSeriesEmpty(series);
+            if (series.size != nRighe) {
+                throw new ArgumentException("All rows must have the same number of columns");
+            }
+
+            // aggiungiamo le colonne al DataFrame
+            AddColumn(column, series);
+        }
+    }
+    
+
+    // costruttore che accetta come parametro un dizionario di serie
+    /// <summary>
+    /// Constructor for DataFrame, with a dictionary of Series.
+    /// </summary>
+    /// <param name="dataFrame"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    public DataFrame(Dictionary<string, Series<T>> dataFrame) {
+        // Inizializziamo il DataFrame
+        Init();
+        // controlliamo che il dizionario non sia nullo
+        if (dataFrame == null) {
+            throw new ArgumentNullException(nameof(dataFrame), "DataFrame cannot be null");
+        }
+        // controlliamo che il dizionario non sia vuoto
+        if (dataFrame.Count == 0) {
+            throw new ArgumentException("DataFrame cannot be empty");
         }
         // aggiungiamo le colonne al DataFrame
-        for (int i = 0; i < columns.Count; i++) {
-            _dataFrame.Add(columns[i], new Series<T>(data.Select(d => d[i]).ToList()));
+        Index idx = new Index(new List<string>());
+        foreach (var kvp in dataFrame) {
+            // controlliamo che la colonna non sia nulla
+            CheckColumnValue(kvp.Key);
+            // controlliamo che la colonna non esista già
+            CheckColumAlreadyExists(kvp.Key);
+            // controlliamo che la serie non sia nulla
+            Controller.CheckSeriesEmpty(kvp.Value);
+            // salviamo l'indice della serie nell'indice del DataFrame e settiamolo
+            if (idx.size == 0) {
+                idx = kvp.Value.Index;
+                idx.Name = "Index";
+            } else if (!idx.Equals(kvp.Value.Index)) {
+                throw new ArgumentException("All series must have the same index");
+            }
+            // aggiungiamo la serie al DataFrame
+            _dataFrame.Add(kvp.Key, kvp.Value);
+            // aggiungiamo il nome della colonna alla serie
+            kvp.Value.Name = kvp.Key;
         }
     }
 
@@ -131,7 +194,7 @@ public class DataFrame<T> : IPandas<T> {
     /// <returns></returns>
     public void AddColumn(string column, Series<T> series) {
         // controlliamo che la serie non sia nulla
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         // controlliamo che la colonna non sia nulla
         CheckColumnValue(column);
         // controlliamo che la colonna non esista già
@@ -142,7 +205,7 @@ public class DataFrame<T> : IPandas<T> {
             Index.Name = "Index";
         }
         // controlliamo che la serie abbia lo stesso indice del DataFrame
-        CheckSameIndex(series);
+        CompareSeriesIndex(series);
         // aggiungiamo la serie al DataFrame
         _dataFrame.Add(column, series);
     }
@@ -170,7 +233,7 @@ public class DataFrame<T> : IPandas<T> {
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentNullException"></exception>
     public void AddRow(Row row, string newIndex = "") {
-        // ontrolliamo che il dataframe abbia colonne
+        // Controlliamo che il dataframe abbia colonne
         if (Columns.Count == 0) {
             throw new ArgumentException("The DataFrame has no columns");
         }
@@ -182,10 +245,12 @@ public class DataFrame<T> : IPandas<T> {
         if (row.Count != Columns.Count) {
             throw new ArgumentException("The row must have the same number of columns as the DataFrame");
         }
-        // aggiungiamo l'ultima riga in fondo
+        // aggiungiamo l'ultima riga in fondo oppure all'indice indicato
         string index = 1.ToString();
         if (String.IsNullOrEmpty(newIndex)) {
             index = Index.size.ToString();
+        } else if (Index.Contains(newIndex)) {
+            throw new ArgumentException($"The index '{newIndex}' already exists");
         } else {
             index = newIndex;
         }
@@ -252,6 +317,17 @@ public class DataFrame<T> : IPandas<T> {
             // controlliamo che la colonna sia valida
             CheckColumnNotFound(column);
             return _dataFrame[column][index];
+        }
+        set {
+            // controlliamo che l'indice sia valido
+            CheckIndexOutOfRange(index);
+            // controlliamo che la colonna sia valida
+            CheckColumnNotFound(column);
+            // controlliamo che il valore non sia nullo
+            if (value == null) {
+                throw new ArgumentNullException(nameof(value), "Value cannot be null");
+            }
+            _dataFrame[column][index] = value;
         }
     }
 
@@ -333,13 +409,6 @@ public class DataFrame<T> : IPandas<T> {
         return maxCw;
     }
 
-    private void SetSeriesByColumn(string column, Series<T> value) {
-        CheckColumnValue(column);
-        CheckColumnNotFound(column);
-        value.Name = column;
-        _dataFrame[column] = value;
-    }
-
     private Series<T> GetSeriesByColumn(string column) {
         CheckColumnValue(column);
         CheckColumnNotFound(column);
@@ -365,7 +434,7 @@ public class DataFrame<T> : IPandas<T> {
         }
     }
 
-    private void CheckSameIndex(Series<T> series) {
+    private void CompareSeriesIndex(Series<T> series) {
         if (!Index.Equals(series.Index)) {
             throw new ArgumentException("The series must have the same index as the DataFrame");
         }

@@ -40,8 +40,8 @@ public static class Operator {
     /// <returns></returns>
     public static void AddSeries(this Series<double> series, Series<double> other, double fill_NaN_With = default) {
 
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         ApplyOperations(series, other, Operations.Add, fill_NaN_With);
         series.Name = $"{series.Name} + {other.Name}";
@@ -60,8 +60,8 @@ public static class Operator {
     /// <remarks>Default is null.</remarks>
     /// <returns></returns>
     public static void SubtractSeries(this Series<double> series, Series<double> other, double fill_NaN_With = default){
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         ApplyOperations(series, other, Operations.Subtract, fill_NaN_With);
         series.Name = $"{series.Name} - {other.Name}";
@@ -80,8 +80,8 @@ public static class Operator {
     /// <remarks>Default is null.</remarks>
     /// <returns></returns>
     public static void MultiplySeries(this Series<double> series, Series<double> other, double fill_NaN_With = default) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         ApplyOperations(series, other, Operations.Multiply, fill_NaN_With);
         series.Name = $"{series.Name} * {other.Name}";
@@ -100,8 +100,8 @@ public static class Operator {
     /// <remarks>Default is null.</remarks>
     /// <returns></returns>
     public static void DivideSeries(this Series<double> series, Series<double> other, double fill_NaN_With = default) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         ApplyOperations(series, other, Operations.Divide, fill_NaN_With);
         series.Name = $"{series.Name} / {other.Name}";
@@ -116,7 +116,7 @@ public static class Operator {
     /// <returns></returns>
     /// <remarks>Default is 0.</remarks>
     public static void RoundSeries(this Series<double> series, int decimals = 0) {
-        Controller.CheckEmpty(series);
+        Controller.CheckSeriesEmpty(series);
         foreach (var index in series.Index) {
             series[index] = System.Math.Round(series[index], decimals);
         }
@@ -133,8 +133,8 @@ public static class Operator {
     /// <remarks>Default is false.</remarks>
     /// <returns></returns>
     public static Series<bool> EqualsTo(this Series<double> series, Series<double> other, bool IsNaN = false) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         // controlliamo che le due serie siano dello stesso tipo
         Controller.CheckIfTypesAreEquals(series, other);
@@ -151,8 +151,8 @@ public static class Operator {
     /// <param name="operation">Operation to apply.</param>
     /// <returns></returns>
     public static Series<bool> LessThan(this Series<double> series, Series<double> other) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         // controlliamo che le due serie siano dello stesso tipo
         Controller.CheckIfTypesAreEquals(series, other);
@@ -170,8 +170,8 @@ public static class Operator {
     /// <param name="operation">Operation to apply.</param>
     /// <returns></returns>
     public static Series<bool> LessThanOrEquals(this Series<double> series, Series<double> other) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         // controlliamo che le due serie siano dello stesso tipo
         Controller.CheckIfTypesAreEquals(series, other);
@@ -188,8 +188,8 @@ public static class Operator {
     /// <param name="operation">Operation to apply.</param>
     /// <returns></returns>
     public static Series<bool> GreaterThan(this Series<double> series, Series<double> other) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         // controlliamo che le due serie siano dello stesso tipo
         Controller.CheckIfTypesAreEquals(series, other);
@@ -207,8 +207,8 @@ public static class Operator {
     /// <param name="operation">Operation to apply.</param>
     /// <returns></returns>
     public static Series<bool> GreaterThanOrEquals(this Series<double> series, Series<double> other) {
-        Controller.CheckEmpty(series);
-        Controller.CheckEmpty(other);
+        Controller.CheckSeriesEmpty(series);
+        Controller.CheckSeriesEmpty(other);
 
         // controlliamo che le due serie siano dello stesso tipo
         Controller.CheckIfTypesAreEquals(series, other);
